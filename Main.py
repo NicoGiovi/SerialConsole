@@ -1,11 +1,10 @@
 from PyQt4 import  QtGui
 from PyQt4 import  QtCore
 import sys
-import UI.UserInterface
-import time
-from UI.Services import SerialService
+import UserInterface
+from Services import SerialService
 
-class SerialConsole(QtGui.QMainWindow, UI.UserInterface.Ui_Form):
+class SerialConsole(QtGui.QMainWindow, UserInterface.Ui_Form):
     def __init__(self):
         super(self.__class__,self).__init__()
         self.setupUi(self)
