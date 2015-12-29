@@ -10,24 +10,18 @@ class SerialConsole(QtGui.QMainWindow, UserInterface.Ui_Form):
         self.setupUi(self)
         self.setFixedSize(552,462)
 #-----------------  Declaro Una Conexion Vacia ----------------------------
-
         self.Conexion = None
 #-----------------  Inicio el Servicio ------------------------------------
-
         self.Servicio = SerialService()
 #-----------------  Relleno La Lista de COMS ------------------------------
-
         for item in self.Servicio.GetListaCOMS():
             self.CboCOMPorts.addItem(item)
 #-----------------  Relleno La Lista de Baudrate --------------------------
-
         for item in self.Servicio.ListaBaudRate:
             self.CboBaudRate.addItem(str(item))
 #-----------------  Instancio la Conexion  --------------------------------
-
         self.BtnConectar.clicked.connect(self.Conectar)
 #-----------------  Cierro la Conexion  -----------------------------------
-
         self.BtnDesconectar.clicked.connect(self.Desconectar)
 #-----------------  Envio de Datos  ---------------------------------------
         self.BtnEnviar.clicked.connect(self.EnviarDatos)
