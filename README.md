@@ -5,7 +5,7 @@ Consola Serial para Pinguino
 
 Requisitos:
 
-*PySide
-*Pyserial
+*PySide*
+*Pyserial*
 
 Para ejecutar solamente hay que abrir Main.py
