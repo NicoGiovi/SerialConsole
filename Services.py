@@ -31,7 +31,6 @@ class SerialService:
         if self.conexion is not None:
             if self.conexion.isOpen():
                 self.conexion.close()
-                print("Desconectado")
                 self.conexion = None
 
 

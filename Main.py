@@ -29,9 +29,7 @@ class MainWindow(QDialog,UI.Ui_Form):
         self.Servicio.Conectar(COM,BR)
 
     def Desconectar(self):
-        if self.Conexion is not None:
-            if self.Conexion.isOpen():
-                self.Servicio.Desconectar()
+        self.Servicio.Desconectar()
 
     def EnviarDatos(self):
         if self.Servicio.conexion.isOpen():
