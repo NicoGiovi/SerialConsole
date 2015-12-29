@@ -38,7 +38,7 @@ class MainWindow(QDialog,UI.Ui_Form):
             Texto = self.TxtEnviar.text()
             Enviar = []
             for char in Texto:
-            Enviar.append(str(char))
+                Enviar.append(str(char))
             if self.ChkNuevaLinea.checkState():
                 Enviar.append('\n')
             if self.ChkRetornoCarro.checkState():
