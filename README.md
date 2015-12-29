@@ -1,12 +1,12 @@
 # SerialConsole
-Serial Console For Pinguino Board
+##Serial Console For Pinguino Board
 
-Consola Serial para Pinguino
+###Consola Serial para Pinguino
 
-Requisitos:
+Se requiere tener instalado:
 
-*PySide*
+*PySide 1.2.4*
 
-*Pyserial*
+*Pyserial 2.7*
 
 Para ejecutar solamente hay que abrir Main.py
