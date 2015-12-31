@@ -7,6 +7,7 @@ class SerialService:
     conexion = None
     def __init__(self):
         pass
+
     def GetConexion(self):
         return self.conexion
 
@@ -39,7 +40,8 @@ class SerialService:
             if self.conexion.isOpen():
                 self.conexion.write(str(Texto))
 
+
     def Leer(self):
-        if self.conexion is not None:
-            while self.conexion.isOpen():
-                return self.conexion.read()
+        dato = self.conexion.read()
+        print(dato)
+        return dato

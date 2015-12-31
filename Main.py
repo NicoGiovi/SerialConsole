@@ -3,7 +3,7 @@ from PySide.QtGui import *
 import sys
 import UI
 from Services import SerialService
-
+import time
 class MainWindow(QDialog,UI.Ui_Form):
     def __init__(self, parent = None):
         super(MainWindow,self).__init__(parent)
@@ -22,15 +22,20 @@ class MainWindow(QDialog,UI.Ui_Form):
         self.connect(self.BtnDesconectar,SIGNAL("clicked()"),self.Desconectar)
     #-----------------  Envio de Datos  ---------------------------------------
         self.connect(self.BtnEnviar,SIGNAL("clicked()"),self.EnviarDatos)
+    #-----------------  Instancio Los Hilos de Lectura y Escritura ------------
 
+        self.HiloLectura = ThreadLectura()
+        self.HiloEscritura = ThreadEscritura()
+
+        self.connect(self.HiloLectura,SIGNAL("LEER_DATOS(QString)"),self.ActualizarTxtRx,Qt.QueuedConnection)
 
     def Conectar(self):
         COM = str(self.CboCOMPorts.currentText())
         BR = int(self.CboBaudRate.currentText())
         self.Servicio.Conectar(COM,BR)
-        self.HiloLectura = ThreadLectura(self.Servicio.GetConexion())
-        self.connect(self.HiloLectura,SIGNAL("LEER_DATOS"), self.ActualizarTxtRx,Qt.DirectConnection)
+
         if self.Servicio.conexion.isOpen():
+            self.HiloLectura.conexion = self.Servicio.GetConexion()
             self.HiloLectura.start()
             print(self.HiloLectura)
 
@@ -40,32 +45,53 @@ class MainWindow(QDialog,UI.Ui_Form):
             self.HiloLectura.quit()
 
     def EnviarDatos(self):
-        Texto = self.TxtEnviar.text()
-        Enviar = []
-        for char in Texto:
-            Enviar.append(str(char))
-        if self.ChkNuevaLinea.checkState():
-            Enviar.append('\n')
-        if self.ChkRetornoCarro.checkState():
-            Enviar.append('\r')
-        self.Servicio.Enviar(''.join(Enviar))
+        if self.ChkNuevaLinea.isChecked():
+            self.HiloEscritura.nl = True
+        if self.ChkRetornoCarro.isChecked():
+            self.HiloEscritura.rc = True
+        self.HiloEscritura.conexion = self.Servicio.GetConexion()
+        self.HiloEscritura.texto = self.TxtEnviar.text()
+        self.HiloEscritura.start()
+        print(self.HiloEscritura)
         self.TxtEnviar.setText("")
 
-    def ActualizarTxtRx(self,val):
-        print val
-        self.TxtDatosRecibidos.insertPlainText(str(val))
+    def ActualizarTxtRx(self,BytesRecibidos):
+        self.TxtDatosRecibidos.insertPlainText(str(BytesRecibidos))
 
 class ThreadLectura(QThread):
-
-    def __init__(self,Conexion,parent = None):
+    conexion = None
+    def __init__(self,parent = None):
         super(ThreadLectura,self).__init__(parent)
-        self.conexion = Conexion
 
     def run(self):
-        while self.conexion.isOpen():
-            var = self.conexion.read()
-            self.emit(SIGNAL("LEER_DATOS(Qstring)"),var)
-            #time.sleep(0.1)
+         if self.conexion is not None:
+            while self.conexion.isOpen():
+                BytesRecibidos = self.conexion.read()
+                self.emit(SIGNAL("LEER_DATOS(QString)"),BytesRecibidos)
+
+class ThreadEscritura(QThread):
+    conexion = None
+    texto = None
+    nl = False
+    rc = False
+
+    def __init__(self,parent = None):
+        super(ThreadEscritura,self).__init__(parent)
+
+    def run(self):
+        print()
+        Enviar = []
+        for char in self.texto:
+            Enviar.append(str(char))
+        if self.nl:
+            Enviar.append('\n')
+        if self.rc:
+            Enviar.append('\r')
+        if self.conexion.isOpen():
+            print("Conexion Abierta")
+            TXDATA = ''.join(Enviar)
+            self.conexion.write(TXDATA.encode())
+
 
 app = QApplication(sys.argv)
 form = MainWindow()
