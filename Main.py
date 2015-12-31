@@ -23,10 +23,9 @@ class MainWindow(QDialog,UI.Ui_Form):
     #-----------------  Envio de Datos  ---------------------------------------
         self.connect(self.BtnEnviar,SIGNAL("clicked()"),self.EnviarDatos)
     #-----------------  Instancio Los Hilos de Lectura y Escritura ------------
-
         self.HiloLectura = ThreadLectura()
         self.HiloEscritura = ThreadEscritura()
-
+    #-----------------  Señal Para Recivir lo que envia el HiloLectura --------
         self.connect(self.HiloLectura,SIGNAL("LEER_DATOS(QString)"),self.ActualizarTxtRx,Qt.QueuedConnection)
 
     def Conectar(self):
@@ -58,6 +57,8 @@ class MainWindow(QDialog,UI.Ui_Form):
     def ActualizarTxtRx(self,BytesRecibidos):
         self.TxtDatosRecibidos.insertPlainText(str(BytesRecibidos))
 
+    #-----------------  Definicion del Hilo de Lectura ------------------------
+
 class ThreadLectura(QThread):
     conexion = None
     def __init__(self,parent = None):
@@ -68,6 +69,8 @@ class ThreadLectura(QThread):
             while self.conexion.isOpen():
                 BytesRecibidos = self.conexion.read()
                 self.emit(SIGNAL("LEER_DATOS(QString)"),BytesRecibidos)
+
+    #-----------------  Definicion del Hilo de Escritura ---------------------
 
 class ThreadEscritura(QThread):
     conexion = None

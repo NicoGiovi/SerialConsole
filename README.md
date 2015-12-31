@@ -8,3 +8,5 @@ Se requiere tener instalado:
 *Pyserial 2.7*
 
 ###Para ejecutar solamente hay que abrir Main.py
+
+Por el Momento solo funciona en Windows
