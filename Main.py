@@ -25,7 +25,7 @@ class MainWindow(QDialog,UI.Ui_Form):
     #-----------------  Instancio Los Hilos de Lectura y Escritura ------------
         self.HiloLectura = ThreadLectura()
         self.HiloEscritura = ThreadEscritura()
-    #-----------------  Señal Para Recivir lo que envia el HiloLectura --------
+    #-----------------  Senal Para Recivir lo que envia el HiloLectura --------
         self.connect(self.HiloLectura,SIGNAL("LEER_DATOS(QString)"),self.ActualizarTxtRx,Qt.QueuedConnection)
 
     def Conectar(self):

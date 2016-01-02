@@ -14,9 +14,9 @@ class SerialService:
     def GetListaCOMS(self):
         listaCOMS = []
         lista = list(serial.tools.list_ports.comports())
-            for item in lista:
-                listaCOMS.append(item[0])
-            return listaCOMS
+        for item in lista:
+            listaCOMS.append(item[0])
+        return listaCOMS
 
     def Conectar(self,ComPort,BaudRate):
         if self.conexion is None:
