@@ -20,10 +20,13 @@ class SerialService:
 
     def Conectar(self,ComPort,BaudRate):
         if self.conexion is None:
-            Com = ComPort[3]
+            if sys.platform.startswith('win'):
+                Com = int(ComPort[3])-1
+            elif sys.platform.startswith('linux'):
+                Com = ComPort
             Conexion = serial.Serial()
             Conexion.baudrate = BaudRate
-            Conexion.port = int(Com)-1
+            Conexion.port = Com
             Conexion.timeout = 100
             Conexion.open()
             self.conexion = Conexion
@@ -32,6 +35,7 @@ class SerialService:
         if self.conexion is not None:
             if self.conexion.isOpen():
                 self.conexion.close()
+                print self.conexion.isOpen()
                 self.conexion = None
 
 
