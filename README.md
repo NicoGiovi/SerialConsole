@@ -2,7 +2,7 @@
 
 # SerialConsole
 
-Consola Serial Para Monitorear Datos Provenientes Desde Microcontrolador PIC 18F4550
+Consola Serial Para Interactuar Con Microcontroladores PIC 18F4550/2550
 
 Requerimientos:
 
