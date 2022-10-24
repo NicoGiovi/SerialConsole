@@ -14,4 +14,4 @@ Ejecutar Main.py
 
 Por el Momento solo funciona en Windows
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/UI.png?raw=true)
+![alt text]([https://github.com/[username]/[reponame]/blob/[branch]/UI.png](https://github.com/NicoGiovi/SerialConsole/blob/master/UI.png)?raw=true)
