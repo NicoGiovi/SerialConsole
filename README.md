@@ -1,12 +1,17 @@
-# SerialConsole
-##Serial Console For Pinguino Board
+** ACTUALMENTE SE ENCUENTRA OBSOLETA **
 
-Se requiere tener instalado:
+# SerialConsole
+
+Consola Serial Para Monitorear Datos Provenientes Desde Microcontrolador PIC 18F4550
+
+Requerimientos:
 
 *PySide 1.2.4*
 
 *Pyserial 2.7*
 
-###Para ejecutar solamente hay que abrir Main.py
+Ejecutar Main.py
 
 Por el Momento solo funciona en Windows
+
+![alt text](https://github.com/[username]/[reponame]/blob/[branch]/consola.jpg?raw=true)
