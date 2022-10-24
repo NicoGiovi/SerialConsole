@@ -14,5 +14,6 @@ Ejecutar Main.py
 
 Por el Momento solo funciona en Windows
 
-![alt text](https://github.com/NicoGiovi/SerialConsole/edit/master/UI.png)
+![Screenshot](UI.png)
+
 
